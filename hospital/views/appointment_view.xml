@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hospital_appointment_tree" model="ir.ui.view">
+        <field name="name">hospital.appointment.tree</field>
+        <field name="model">appointment</field>
+        <field name="arch" type="xml">
+            <tree string="Appointment" sample="1">
+                <field name="patient_id"/>
+                <field name="appointment_date"/>
+                <field name="reference"/>
+                <field name="gender"/>
+                <field name="doctor_id" widget="many2one_avatar"/>
+                <field name="activity_ids" widget="list_activity"/>
+                <field name="state"
+                       decoration-success="state in ('done')"
+                       decoration-info="state in ('draft','in_consultation')"
+                       widget="badge"
+                />
+            </tree>
+        </field>
+    </record>
+
+
+     <record id="activity_hospital_appointment" model="ir.ui.view">
+            <field name="name">appointment.activity</field>
+            <field name="model">appointment</field>
+            <field name="arch" type="xml">
+                <activity string="Appointments">
+                    <field name="patient_id"/>
+                    <field name="reference"/>
+                    <templates>
+                        <div t-name="activity-box">
+                            <img t-att-src="activity_image('patient', 'image', record.patient_id.raw_value)" role="img" t-att-title="record.patient_id.value" t-att-alt="record.patient_id.value"/>
+                            <div>
+                                <field name="reference" display="full"/>
+                            </div>
+                        </div>
+                    </templates>
+                </activity>
+            </field>
+        </record>
+
+    <record id="view_hospital_appointment_form" model="ir.ui.view">
+        <field name="name">hospital.appointment.form</field>
+        <field name="model">appointment</field>
+        <field name="arch" type="xml">
+            <form string="Patient">
+                <header>
+                    <button name="action_in_consultation" data-hotkey="i" string="In Consultation" type="object"
+                            states="draft"/>
+                    <button name="action_done" type="object" data-hotkey="d" states="in_consultation" string="Done"/>
+                    <button name="action_cancel" type="object" data-hotkey="c" states="in_consultation"
+                            string="Cancel"/>
+                    <button name="action_reset_to_draft" data-hotkey="f" type="object" states="done,cancel"
+                            string="Set To Draft"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,in_consultation,done,cancel"
+                    />
+                </header>
+                <sheet>
+                      <field name="image" class="oe_avatar" widget="image"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="priority" widget="priority"/>
+
+                        </h1>
+                    </div>
+                    <group>
+
+                        <field name="patient_id"/>
+                        <field name="doctor_id" widget="many2one_avatar"/>
+                    </group>
+                    <group>
+                          <field name="hide_sales_price" groups="base.group_no_one"/>
+                        <field name="reference"/>
+                        <button name="action_test" type="object" string="Test" confirm="Are you sure to test"
+                                help="to make confirm test"
+                        />
+                    </group>
+                    <notebook>
+                        <page string="Prescription" name="prescription">
+                            <group>
+                                <field name="appointment_date"/>
+                            </group>
+                        </page>
+                        <page string="Pharmacy" name="pharmacy">
+                            <field name="pharmacy_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="unit_price"
+                                           attrs="{'column_invisible': [('parent.hide_sales_price', '=', True)]}"/>
+                                    <field name="qty"/>
+                                </tree>
+                                <form>
+                                    <field name="product_id"/>
+                                    <field name="unit_price"/>
+                                    <field name="qty"/>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" options="{'open_attachments': True}"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hospital_appointment_search" model="ir.ui.view">
+        <field name="name">hospital.appointment.search</field>
+        <field name="model">appointment</field>
+        <field name="arch" type="xml">
+            <search string="Search appointment">
+
+            </search>
+        </field>
+    </record>
+
+    <record id="action_hospital_appointment" model="ir.actions.act_window">
+        <field name="name">appointment</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">appointment</field>
+        <field name="view_mode">tree,form,activity</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first appointment!</p>
+        </field>
+    </record>
+    <menuitem id="menu_appointment_child"
+              name="Appointment"
+              parent="menu_patient_appointment"
+              action="action_hospital_appointment"
+              sequence="20"/>
+
+</odoo>

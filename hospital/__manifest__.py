@@ -1,0 +1,21 @@
+{
+    'name': 'Hospital Management',
+    'version': '1.0',
+    'category': 'Health',
+    'author': 'Islam Eid',
+    'summary': 'Manage patient records easily',
+    'depends': ['base','mail','product'],
+    'data': [
+        'security/ir.model.access.csv',
+        'data/patient_tag_data.xml',
+        'data/sequence_data.xml',
+        'views/menu.xml',
+        'views/patient_view.xml',
+        'views/female_patient.xml',
+        'views/appointment_view.xml',
+        'views/patient_tag_view.xml',
+        'wizard/cancel_appointment_wizard_view.xml',
+    ],
+    'installable': True,
+    'application': True,
+}

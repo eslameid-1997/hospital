@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hospital_patient_tag_tree" model="ir.ui.view">
+        <field name="name">hospital.patient.tag.tree</field>
+        <field name="model">patient.tag</field>
+        <field name="arch" type="xml">
+            <tree string="Patients" sample="1">
+                <field name="name"/>
+                <field name="color" widget="color_picker"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_hospital_patient_tag_form" model="ir.ui.view">
+        <field name="name">hospital.patient.tag.form</field>
+        <field name="model">patient.tag</field>
+        <field name="arch" type="xml">
+            <form string="Patient Tag">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="color" widget="color_picker"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_hospital_patient_tag" model="ir.actions.act_window">
+        <field name="name">Patients</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">patient.tag</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first patient tag!</p>
+        </field>
+    </record>
+    <menuitem id="menu_patient_tag_child"
+              name="Patient tag"
+              parent="menu_patient_configuration"
+              action="action_hospital_patient_tag"
+              sequence="40"/>
+
+</odoo>
