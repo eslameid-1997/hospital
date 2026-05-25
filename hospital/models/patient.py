@@ -19,7 +19,7 @@ class Patient(models.Model):
     birth_date = fields.Date(string='Birth Date')
     reference=fields.Char(string='Reference')
     tags_ids = fields.Many2many('patient.tag',string='Tags')
-
+    appointment_count = fields.Integer(string='Appointment Count')
     @api.model
     def create(self, vals):
         vals['reference'] = self.env['ir.sequence'].next_by_code('patient')

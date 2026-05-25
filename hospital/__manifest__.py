@@ -14,6 +14,7 @@
         'views/female_patient.xml',
         'views/appointment_view.xml',
         'views/patient_tag_view.xml',
+        'views/odoo_playground_view.xml',
         'wizard/cancel_appointment_wizard_view.xml',
     ],
     'installable': True,
