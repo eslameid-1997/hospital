@@ -5,6 +5,7 @@
         <field name="model">patient</field>
         <field name="arch" type="xml">
             <tree string="Patients" sample="1">
+                <field name="id"/>
                 <field name="name"/>
                 <field name="age"/>
                 <field name="gender"/>
@@ -17,6 +18,10 @@
         <field name="model">patient</field>
         <field name="arch" type="xml">
             <form string="Patient">
+                <header>
+                    <button string="get patient" type="object" name="get_patient" class="btn-primary"/>
+
+                </header>
                 <sheet>
                     <group>
                         <group>

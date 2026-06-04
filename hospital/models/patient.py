@@ -1,3 +1,6 @@
+import requests
+from requests import Request
+
 from odoo import models, fields, api
 from datetime import date
 
@@ -46,3 +49,19 @@ class Patient(models.Model):
             name = record.reference+' '+ record.name
             patient_list.append((record.id, name))
         return patient_list
+
+    def get_patient(self):
+        url = "http://127.0.0.1:8015/v1/patient"
+        payload = {'id': self.id}
+        response = requests.get(url, params=payload)
+        print("Status Code:", response.status_code)
+        print("Response Data:", response.json())
+
+        # # 3. استخدم params وليس data
+        # response = requests.get(url, params=payload)
+        #
+        # print("Status Code:", response.status_code)
+        # try:
+        #     print("Response Data:", response.json())
+        # except Exception:
+        #     print("Response Text:", response.text)
